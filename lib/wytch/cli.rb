@@ -4,9 +4,17 @@ require "thor"
 
 module Wytch
   class CLI < Thor
-    desc "new", "Create a new Wytch site"
-    def new
-      puts "Beware the wytch!"
+    include Thor::Actions
+
+    def self.source_root
+      File.expand_path("templates", __dir__)
+    end
+
+    desc "new NAME", "Create a new Wytch site"
+    def new(name)
+      empty_directory(name)
+      copy_file("Gemfile", "#{name}/Gemfile")
+      say "Created new Wytch site in #{name}/", :green
     end
   end
 end
