@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     wytch (0.1.0)
+      thor (~> 1.4)
 
 GEM
   remote: https://rubygems.org/
@@ -84,6 +85,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.25.0)
     stringio (3.1.7)
+    thor (1.4.0)
     tsort (0.2.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
