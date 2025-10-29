@@ -13,7 +13,7 @@ module Wytch
     desc "new NAME", "Create a new Wytch site"
     def new(name)
       empty_directory(name)
-      copy_file("Gemfile", "#{name}/Gemfile")
+      template("Gemfile.tt", "#{name}/Gemfile")
       say "Created new Wytch site in #{name}/", :green
     end
   end
