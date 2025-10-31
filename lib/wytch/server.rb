@@ -30,16 +30,22 @@ module Wytch
     private
 
     def load_configuration
-      # Load all page classes
-      Dir.glob("pages/**/*.rb").each { |file| require_relative File.join(Dir.pwd, file) }
+      # Load helper modules
+      Dir.glob("helpers/**/*.rb").sort.each { |file| require_relative File.join(Dir.pwd, file) }
 
-      # Load configuration
+      # Load view templates
+      Dir.glob("views/**/*.rb").sort.each { |file| require_relative File.join(Dir.pwd, file) }
+
+      # Initialize configuration
       config_file = File.join(Dir.pwd, "config.rb")
       if File.exist?(config_file)
         load config_file
       else
         puts "Warning: config.rb not found in current directory"
       end
+
+      # Load content files
+      Wytch.configuration.load_content
     end
 
     def app

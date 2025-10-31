@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+view IndexView
+
+title "Welcome to Wytch"
+description "Your static site generator"
+
+p "Beware the wytch!"
+p "Your site is ready."

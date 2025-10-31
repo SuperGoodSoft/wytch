@@ -2,23 +2,22 @@
 
 module Wytch
   class Configuration
-    attr_reader :page_mappings
+    attr_reader :page_mappings, :content_loader
 
     def initialize
       @page_mappings = {}
-      @pages_block = nil
+      @content_loader = ContentLoader.new
     end
 
-    def pages(&block)
-      @pages_block = block
-      reload_pages
+    def load_content
+      @page_mappings = @content_loader.load_content
     end
 
-    def reload_pages
-      @page_mappings.clear
-      instance_eval(&@pages_block) if @pages_block
+    def reload_content
+      load_content
     end
 
+    # Legacy method for manual page registration
     def page(path, page_instance)
       @page_mappings[path] = page_instance
     end
