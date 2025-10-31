@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+# Configure your Wytch site
+Wytch.configure do |config|
+  config.pages do
+    page "/", IndexPage.new
+  end
+end

@@ -14,6 +14,9 @@ module Wytch
     def new(name)
       empty_directory(name)
       template("Gemfile.tt", "#{name}/Gemfile")
+      template("config.rb.tt", "#{name}/config.rb")
+      empty_directory("#{name}/pages")
+      template("pages/index_page.rb.tt", "#{name}/pages/index_page.rb")
       say "Created new Wytch site in #{name}/", :green
     end
 

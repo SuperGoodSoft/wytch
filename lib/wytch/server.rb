@@ -11,6 +11,8 @@ module Wytch
     end
 
     def start
+      load_configuration
+
       require "puma"
       require "puma/server"
 
@@ -27,13 +29,38 @@ module Wytch
 
     private
 
+    def load_configuration
+      # Load all page classes
+      Dir.glob("pages/**/*.rb").each { |file| require_relative File.join(Dir.pwd, file) }
+
+      # Load configuration
+      config_file = File.join(Dir.pwd, "config.rb")
+      if File.exist?(config_file)
+        load config_file
+      else
+        puts "Warning: config.rb not found in current directory"
+      end
+    end
+
     def app
       lambda { |env|
-        [
-          200,
-          {"content-type" => "text/html"},
-          ["<html><body><h1>Beware the wytch!</h1><p>Development server is running.</p></body></html>"]
-        ]
+        path = env["PATH_INFO"]
+        page = Wytch.configuration&.page_mappings&.[](path)
+
+        if page
+          body = page.render
+          [
+            200,
+            {"content-type" => "text/html"},
+            [body]
+          ]
+        else
+          [
+            404,
+            {"content-type" => "text/html"},
+            ["<html><body><h1>404 Not Found</h1><p>Page not found: #{path}</p></body></html>"]
+          ]
+        end
       }
     end
   end

@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+class IndexPage
+  def render
+    <<~HTML
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Welcome to Wytch</title>
+        </head>
+        <body>
+          <h1>Beware the wytch!</h1>
+          <p>Your site is ready.</p>
+        </body>
+      </html>
+    HTML
+  end
+end
