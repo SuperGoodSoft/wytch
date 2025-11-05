@@ -2,12 +2,16 @@
 
 module <%= @site_module %>
   module HTMLHelpers
-    def heading(text, level: 1)
-      @content_blocks << {type: :heading, text: text, level: level}
+    def title(value)
+      @metadata[:title] = value
     end
 
-    def link(text, url)
-      @content_blocks << {type: :link, text: text, url: url}
+    def description(value)
+      @metadata[:description] = value
+    end
+
+    def p(text)
+      @content_blocks << {type: :paragraph, text: text}
     end
   end
 end
