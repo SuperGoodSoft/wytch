@@ -16,13 +16,14 @@ module Wytch
     end
 
     # DSL methods
-    def add(helper_module)
+    def add(helper_module_name)
+      helper_module = Object.const_get(helper_module_name)
       @helpers << helper_module
       extend(helper_module)
     end
 
-    def view(view_class)
-      @view_class = view_class
+    def view(view_class_name)
+      @view_class = Object.const_get(view_class_name)
     end
 
     # Metadata methods

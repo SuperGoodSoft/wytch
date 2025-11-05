@@ -23,13 +23,10 @@ module Wytch
       empty_directory("#{name}/content")
       template("content/index.rb.tt", "#{name}/content/index.rb")
 
-      # Views directory
-      empty_directory("#{name}/views")
-      template("views/index_view.rb.tt", "#{name}/views/index_view.rb")
-
-      # Helpers directory
-      empty_directory("#{name}/helpers")
-      template("helpers/html_helpers.rb.tt", "#{name}/helpers/html_helpers.rb")
+      # Src directory with views and helpers (flat structure for Zeitwerk)
+      empty_directory("#{name}/src")
+      template("src/index_view.rb.tt", "#{name}/src/index_view.rb")
+      template("src/html_helpers.rb.tt", "#{name}/src/html_helpers.rb")
 
       say "Created new Wytch site in #{name}/", :green
     end

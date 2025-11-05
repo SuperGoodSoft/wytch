@@ -2,11 +2,16 @@
 
 module Wytch
   class Configuration
-    attr_reader :page_mappings, :content_loader
+    attr_reader :page_mappings, :content_loader, :inflections
 
     def initialize
       @page_mappings = {}
       @content_loader = ContentLoader.new
+      @inflections = {}
+    end
+
+    def inflect(inflections_hash)
+      @inflections.merge!(inflections_hash)
     end
 
     def load_content

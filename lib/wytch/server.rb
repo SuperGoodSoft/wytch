@@ -4,7 +4,7 @@ require "rack"
 
 module Wytch
   class Server
-    attr_reader :options
+    attr_reader :options, :site_code_loader
 
     def initialize(options = {})
       @options = options
@@ -30,13 +30,7 @@ module Wytch
     private
 
     def load_configuration
-      # Load helper modules
-      Dir.glob("helpers/**/*.rb").sort.each { |file| require_relative File.join(Dir.pwd, file) }
-
-      # Load view templates
-      Dir.glob("views/**/*.rb").sort.each { |file| require_relative File.join(Dir.pwd, file) }
-
-      # Initialize configuration
+      # Initialize configuration and load config.rb first to get inflections
       config_file = File.join(Dir.pwd, "config.rb")
       if File.exist?(config_file)
         load config_file
@@ -44,12 +38,23 @@ module Wytch
         puts "Warning: config.rb not found in current directory"
       end
 
+      # Load site code (views, helpers) using Zeitwerk with configured inflections
+      src_path = File.join(Dir.pwd, "src")
+      @site_code_loader = SiteCodeLoader.new(
+        path: src_path,
+        enable_reloading: true,
+        inflections: Wytch.configuration.inflections
+      )
+
+      # Eager load all site code so it's available when content files reference it
+      @site_code_loader.eager_load
+
       # Load content files
       Wytch.configuration.load_content
     end
 
     def app
-      lambda { |env|
+      base_app = lambda { |env|
         path = env["PATH_INFO"]
         page = Wytch.configuration&.page_mappings&.[](path)
 
@@ -68,6 +73,9 @@ module Wytch
           ]
         end
       }
+
+      # Wrap with reloading middleware
+      SiteCodeLoaderMiddleware.new(base_app, site_code_loader)
     end
   end
 end
