@@ -36,9 +36,7 @@ module Wytch
     end
 
     def load_page(file_path)
-      page = Page.new
-      page.instance_eval(File.read(file_path), file_path)
-      page
+      Page.new.tap { it.load_file(file_path) }
     end
   end
 end

@@ -2,12 +2,15 @@
 
 module Wytch
   class Page
-    attr_reader :metadata, :view_class
-
     def initialize
       @metadata = {}
       @view_class = nil
-      @helpers = []
+    end
+
+    attr_reader :metadata
+
+    def load_file(file_path)
+      instance_eval File.read(file_path), file_path
     end
 
     def render
@@ -15,13 +18,17 @@ module Wytch
     end
 
     def add(helper_module_name)
-      helper_module = Object.const_get(helper_module_name)
-      @helpers << helper_module
-      extend(helper_module)
+      extend resolve_constant helper_module_name
     end
 
     def view(view_class_name)
-      @view_class = Object.const_get(view_class_name)
+      @view_class = resolve_constant view_class_name
+    end
+
+    private
+
+    def resolve_constant(name)
+      Object.const_get(name)
     end
   end
 end
