@@ -2,6 +2,10 @@
 
 module <%= @site_module %>
   module HTMLHelpers
+    def content_blocks
+      @content_blocks ||= []
+    end
+
     def title(value)
       @metadata[:title] = value
     end
@@ -11,7 +15,7 @@ module <%= @site_module %>
     end
 
     def p(text)
-      @content_blocks << {type: :paragraph, text: text}
+      content_blocks << {type: :paragraph, text: text}
     end
   end
 end

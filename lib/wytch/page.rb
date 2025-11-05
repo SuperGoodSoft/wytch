@@ -2,11 +2,10 @@
 
 module Wytch
   class Page
-    attr_reader :metadata, :content_blocks, :view_class
+    attr_reader :metadata, :view_class
 
     def initialize
       @metadata = {}
-      @content_blocks = []
       @view_class = nil
       @helpers = []
     end
