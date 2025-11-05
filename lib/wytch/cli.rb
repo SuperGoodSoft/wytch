@@ -11,7 +11,10 @@ module Wytch
     end
 
     desc "new NAME", "Create a new Wytch site"
+    method_option :local, type: :boolean, default: false, desc: "Use local Wytch gem for development"
     def new(name)
+      @local_wytch_path = File.expand_path("../..", __dir__) if options[:local]
+
       empty_directory(name)
       template("Gemfile.tt", "#{name}/Gemfile")
       template("config.rb.tt", "#{name}/config.rb")

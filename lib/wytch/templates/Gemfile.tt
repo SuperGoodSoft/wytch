@@ -2,4 +2,8 @@
 
 source "https://rubygems.org"
 
+<% if @local_wytch_path -%>
+gem "wytch", path: "<%= @local_wytch_path %>"
+<% else -%>
 gem "wytch", "~> <%= Gem::Version.new(Wytch::VERSION).segments[0..1].join('.') %>"
+<% end -%>
