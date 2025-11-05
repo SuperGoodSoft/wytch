@@ -1,0 +1,46 @@
+# frozen_string_literal: true
+
+module <%= @site_module %>
+  class IndexView < Phlex::HTML
+    def initialize(page)
+      @page = page
+    end
+
+    def view_template
+      doctype
+
+      html do
+        head do
+          title { @page.metadata[:title] }
+          meta name: "description", content: @page.metadata[:description] if @page.metadata[:description]
+        end
+
+        body do
+          h1 { @page.metadata[:title] }
+
+          @page.content_blocks.each do |block|
+            render_block(block)
+          end
+        end
+      end
+    end
+
+    private
+
+    def render_block(block)
+      case block[:type]
+      when :paragraph
+        p { block[:text] }
+      when :image
+        img src: block[:src], alt: block[:description]
+      when :code
+        pre do
+          code { block[:content] }
+        end
+      else
+        # Unknown block type - could call helper methods here
+        p { "Unknown block type: #{block[:type]}" }
+      end
+    end
+  end
+end

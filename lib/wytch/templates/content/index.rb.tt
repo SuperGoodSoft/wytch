@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-view "IndexView"
+view "<%= @site_module %>::IndexView"
 
 title "Welcome to Wytch"
 description "Your static site generator"

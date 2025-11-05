@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
-# Configure your Wytch site
 Wytch.configure do |config|
-  # Configure Zeitwerk inflections for your site code
-  # This tells Zeitwerk how to map file names to constant names
   config.inflect(
     "html_helpers" => "HTMLHelpers"
   )
-
-  # Content is automatically loaded from content/ directory
-  # Routes are convention-based: content/index.rb -> /
 end

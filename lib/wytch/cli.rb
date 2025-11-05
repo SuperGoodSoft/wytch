@@ -15,6 +15,10 @@ module Wytch
     def new(name)
       @local_wytch_path = File.expand_path("../..", __dir__) if options[:local]
 
+      # Extract site name and create module constant
+      @site_name = File.basename(name)
+      @site_module = classify(@site_name)
+
       empty_directory(name)
       template("Gemfile.tt", "#{name}/Gemfile")
       template("config.rb.tt", "#{name}/config.rb")
@@ -23,10 +27,11 @@ module Wytch
       empty_directory("#{name}/content")
       template("content/index.rb.tt", "#{name}/content/index.rb")
 
-      # Src directory with views and helpers (flat structure for Zeitwerk)
+      # Src directory with namespaced code
       empty_directory("#{name}/src")
-      template("src/index_view.rb.tt", "#{name}/src/index_view.rb")
-      template("src/html_helpers.rb.tt", "#{name}/src/html_helpers.rb")
+      empty_directory("#{name}/src/#{@site_name}")
+      template("src/site/index_view.rb.tt", "#{name}/src/#{@site_name}/index_view.rb")
+      template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")
 
       say "Created new Wytch site in #{name}/", :green
     end
@@ -36,6 +41,12 @@ module Wytch
     method_option :host, type: :string, default: "localhost", aliases: "-h", desc: "Host to bind the server to"
     def server
       Server.new(options).start
+    end
+
+    private
+
+    def classify(name)
+      name.split("_").map(&:capitalize).join
     end
   end
 end
