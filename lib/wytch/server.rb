@@ -40,14 +40,12 @@ module Wytch
 
       # Load site code (views, helpers) using Zeitwerk with configured inflections
       src_path = File.join(Dir.pwd, "src")
+
       @site_code_loader = SiteCodeLoader.new(
         path: src_path,
         enable_reloading: true,
         inflections: Wytch.configuration.inflections
       )
-
-      # Eager load all site code so it's available when content files reference it
-      @site_code_loader.eager_load
 
       # Load content files
       Wytch.configuration.load_content
