@@ -2,29 +2,14 @@
 
 module Wytch
   class Configuration
-    attr_reader :page_mappings, :content_loader, :inflections
+    attr_reader :inflections
 
     def initialize
-      @page_mappings = {}
-      @content_loader = ContentLoader.new
       @inflections = {}
     end
 
     def inflect(inflections_hash)
       @inflections.merge!(inflections_hash)
-    end
-
-    def load_content
-      @page_mappings = @content_loader.load_content
-    end
-
-    def reload_content
-      load_content
-    end
-
-    # Legacy method for manual page registration
-    def page(path, page_instance)
-      @page_mappings[path] = page_instance
     end
   end
 

@@ -2,15 +2,15 @@
 
 module Wytch
   class SiteCodeLoaderMiddleware
-    def initialize(app, loader)
+    def initialize(app, coordinator)
       @app = app
-      @loader = loader
+      @coordinator = coordinator
     end
 
     def call(env)
-      @loader.reload!
+      @coordinator.reload!
 
-      @loader.reload_lock.with_read_lock {
+      @coordinator.reload_lock.with_read_lock {
         @app.call(env)
       }
     end

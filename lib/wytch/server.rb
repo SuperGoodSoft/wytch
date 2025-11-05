@@ -4,14 +4,18 @@ require "rack"
 
 module Wytch
   class Server
-    attr_reader :options, :site_code_loader
+    attr_reader :options
 
     def initialize(options = {})
       @options = options
     end
 
     def start
-      load_configuration
+      if File.exist?(config_file = File.join(Dir.pwd, "config.rb"))
+        load config_file
+      else
+        puts "Warning: config.rb not found in current directory"
+      end
 
       require "puma"
       require "puma/server"
@@ -29,32 +33,23 @@ module Wytch
 
     private
 
-    def load_configuration
-      # Initialize configuration and load config.rb first to get inflections
-      config_file = File.join(Dir.pwd, "config.rb")
-      if File.exist?(config_file)
-        load config_file
-      else
-        puts "Warning: config.rb not found in current directory"
+    def reload_coordinator
+      @reload_coordinator ||= begin
+        src_path = File.join(Dir.pwd, "src")
+        content_path = File.join(Dir.pwd, "content")
+
+        ReloadCoordinator.new(
+          site_code_path: src_path,
+          content_path: content_path,
+          inflections: Wytch.configuration.inflections
+        )
       end
-
-      # Load site code (views, helpers) using Zeitwerk with configured inflections
-      src_path = File.join(Dir.pwd, "src")
-
-      @site_code_loader = SiteCodeLoader.new(
-        path: src_path,
-        enable_reloading: true,
-        inflections: Wytch.configuration.inflections
-      )
-
-      # Load content files
-      Wytch.configuration.load_content
     end
 
     def app
       base_app = lambda { |env|
         path = env["PATH_INFO"]
-        page = Wytch.configuration&.page_mappings&.[](path)
+        page = reload_coordinator.pages[path]
 
         if page
           body = page.render
@@ -73,7 +68,7 @@ module Wytch
       }
 
       # Wrap with reloading middleware
-      SiteCodeLoaderMiddleware.new(base_app, site_code_loader)
+      SiteCodeLoaderMiddleware.new(base_app, reload_coordinator)
     end
   end
 end
