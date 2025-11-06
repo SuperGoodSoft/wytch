@@ -4,6 +4,14 @@ module Wytch
   class Configuration
     attr_reader :inflections
 
+    def self.load!
+      if File.exist?(config_file = File.join(Dir.pwd, "config.rb"))
+        load config_file
+      else
+        puts "Warning: config.rb not found in current directory"
+      end
+    end
+
     def initialize
       @inflections = {}
     end

@@ -11,11 +11,7 @@ module Wytch
     end
 
     def start
-      if File.exist?(config_file = File.join(Dir.pwd, "config.rb"))
-        load config_file
-      else
-        puts "Warning: config.rb not found in current directory"
-      end
+      Configuration.load!
 
       require "puma"
       require "puma/server"
