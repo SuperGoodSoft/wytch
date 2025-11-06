@@ -2,8 +2,6 @@
 
 module Wytch
   class Configuration
-    attr_reader :inflections
-
     def self.load!
       if File.exist?(config_file = File.join(Dir.pwd, "config.rb"))
         load config_file
@@ -14,24 +12,30 @@ module Wytch
 
     def initialize
       @inflections = {}
+      @content_dir = "content"
     end
+
+    attr_reader :inflections
 
     def inflect(inflections_hash)
       @inflections.merge!(inflections_hash)
     end
+
+    attr_accessor :content_dir
   end
 
   class << self
-    attr_accessor :configuration
+    def configuration
+      @configuration ||= Configuration.new
+    end
 
     def configure
-      self.configuration ||= Configuration.new
       yield(configuration) if block_given?
       configuration
     end
 
     def reset_configuration!
-      self.configuration = nil
+      @configuration = nil
     end
   end
 end

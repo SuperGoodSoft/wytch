@@ -7,9 +7,8 @@ module Wytch
   class ReloadCoordinator
     attr_reader :reload_lock, :pages
 
-    def initialize(site_code_path:, content_path:, inflections: {})
+    def initialize(site_code_path:, inflections: {})
       @site_code_path = site_code_path
-      @content_path = content_path
       @inflections = inflections
       @pages = {}
       @reload_lock = Concurrent::ReadWriteLock.new
@@ -60,8 +59,6 @@ module Wytch
     end
 
     def setup_content_watching
-      return unless Dir.exist?(@content_path)
-
       @start_site_code_listener = Once.new do
         Listen.to(@site_code_path) do
           @site_code_dirty = true
@@ -69,7 +66,7 @@ module Wytch
       end
 
       @start_content_listener = Once.new do
-        Listen.to(@content_path) do
+        Listen.to(Wytch.configuration.content_dir) do
           @content_dirty = true
         end.start
       end
@@ -81,7 +78,7 @@ module Wytch
     end
 
     def reload_content
-      content_loader = ContentLoader.new(@content_path)
+      content_loader = ContentLoader.new
       @pages = content_loader.load_content
     end
   end

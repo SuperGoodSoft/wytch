@@ -2,10 +2,6 @@
 
 module Wytch
   class ContentLoader
-    def initialize(content_dir = "content")
-      @content_dir = content_dir
-    end
-
     def load_content
       pages = {}
 
@@ -19,8 +15,6 @@ module Wytch
     end
 
     private
-
-    attr_reader :content_dir
 
     def route_from_path(file_path)
       # Convert content/index.rb -> /
@@ -37,6 +31,9 @@ module Wytch
 
     def load_page(file_path)
       Page.new.tap { |page| page.load_file(file_path) }
+
+    def content_dir
+      Wytch.configuration.content_dir
     end
   end
 end

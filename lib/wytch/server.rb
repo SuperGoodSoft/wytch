@@ -32,11 +32,9 @@ module Wytch
     def reload_coordinator
       @reload_coordinator ||= begin
         src_path = File.join(Dir.pwd, "src")
-        content_path = File.join(Dir.pwd, "content")
 
         ReloadCoordinator.new(
           site_code_path: src_path,
-          content_path: content_path,
           inflections: Wytch.configuration.inflections
         )
       end
