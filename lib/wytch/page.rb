@@ -7,7 +7,9 @@ module Wytch
       @metadata = {}
       @view_class = nil
 
-      instance_eval File.read(file_path), file_path
+      source_path = File.join(Wytch.configuration.content_dir, @file_path)
+
+      instance_eval File.read(source_path), source_path
     end
 
     attr_reader :metadata
@@ -17,13 +19,19 @@ module Wytch
     end
 
     def path
-      relative_path = @file_path.delete_prefix("#{Wytch.configuration.content_dir}/").delete_suffix(".rb")
-
-      if relative_path == "index"
+      if virtual_path == "index"
         "/"
       else
-        "/#{relative_path}"
+        "/#{virtual_path}"
       end
+    end
+
+    def virtual_path
+      @file_path.delete_prefix("#{Wytch.configuration.content_dir}/").delete_suffix(".rb")
+    end
+
+    def build_path
+      "#{virtual_path}/index.html"
     end
 
     def add(helper_module)

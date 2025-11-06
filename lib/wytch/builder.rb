@@ -18,16 +18,14 @@ module Wytch
 
       FileUtils.mkdir(OUTPUT_DIR) unless Dir.exist?(OUTPUT_DIR)
 
-      pages.each do |route, page|
-        output_path = if route == "/"
-          File.join(OUTPUT_DIR, "index.html")
-        else
-          File.join(OUTPUT_DIR, route.delete_prefix("/"), "index.html")
-        end
+      pages.values.each do |page|
+        build_path = File.join(OUTPUT_DIR, page.build_path)
 
-        FileUtils.mkdir_p(File.dirname(output_path))
+        puts "Building #{page.path} → #{build_path}"
 
-        File.write(output_path, page.render)
+        FileUtils.mkdir_p File.dirname(build_path)
+
+        File.write build_path, page.render
       end
     end
   end

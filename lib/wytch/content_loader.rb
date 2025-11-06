@@ -5,7 +5,7 @@ module Wytch
     def load_content
       pages = {}
 
-      Dir.glob(File.join(content_dir, "**", "*.rb")).each do |file_path|
+      Dir.glob(File.join("**", "*.rb"), base: content_dir).each do |file_path|
         page = load_page(file_path)
         pages[page.path] = page
       end
