@@ -1,6 +1,6 @@
 RSpec.describe Wytch::Page do
   let(:page) { described_class.new(file_path: dsl_file_path) }
-  let(:dsl_file_path) { File.expand_path("../fixtures/dsl.rb", __dir__) }
+  let(:dsl_file_path) { file_fixture "dsl.rb" }
 
   describe "#initialize" do
     it "executes the file in the context of the page" do
@@ -15,7 +15,7 @@ RSpec.describe Wytch::Page do
 
     context "when the page is an index" do
       let(:page) {
-        described_class.new(file_path: File.expand_path("../fixtures/index.rb", __dir__))
+        described_class.new(file_path: file_fixture("index.rb"))
       }
 
       it { is_expected.to eq "/" }
@@ -23,7 +23,7 @@ RSpec.describe Wytch::Page do
 
     context "when the page is not an index" do
       let(:page) {
-        described_class.new(file_path: File.expand_path("../fixtures/about.rb", __dir__))
+        described_class.new(file_path: file_fixture("about.rb"))
       }
 
       it { is_expected.to eq "/about" }
@@ -31,4 +31,8 @@ RSpec.describe Wytch::Page do
   end
 
   describe "DSL"
+
+  def file_fixture(name)
+    File.expand_path("../fixtures/#{name}", __dir__)
+  end
 end
