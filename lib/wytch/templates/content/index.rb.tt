@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-add "<%= @site_module %>::HTMLHelpers"
-view "<%= @site_module %>::IndexView"
+add <%= @site_module %>::HTMLHelpers
+view <%= @site_module %>::IndexView
 
 title "Welcome to Wytch"
 description "Your static site generator"

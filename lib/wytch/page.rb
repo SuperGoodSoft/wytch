@@ -17,18 +17,12 @@ module Wytch
       @view_class.new(self).call
     end
 
-    def add(helper_module_name)
-      extend resolve_constant helper_module_name
+    def add(helper_module)
+      extend helper_module
     end
 
-    def view(view_class_name)
-      @view_class = resolve_constant view_class_name
-    end
-
-    private
-
-    def resolve_constant(name)
-      Object.const_get(name)
+    def view(view_class)
+      @view_class = view_class
     end
   end
 end
