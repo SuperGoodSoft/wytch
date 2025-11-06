@@ -43,6 +43,11 @@ module Wytch
       Server.new(options).start
     end
 
+    desc "build", "Build the static site"
+    def build
+      Builder.new.build
+    end
+
     private
 
     def classify(name)
