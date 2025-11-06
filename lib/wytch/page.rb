@@ -2,19 +2,28 @@
 
 module Wytch
   class Page
-    def initialize
+    def initialize(file_path:)
+      @file_path = file_path
       @metadata = {}
       @view_class = nil
+
+      instance_eval File.read(file_path), file_path
     end
 
     attr_reader :metadata
 
-    def load_file(file_path)
-      instance_eval File.read(file_path), file_path
-    end
-
     def render
       @view_class.new(self).call
+    end
+
+    def path
+      relative_path = @file_path.delete_prefix("#{Wytch.configuration.content_dir}/").delete_suffix(".rb")
+
+      if relative_path == "index"
+        "/"
+      else
+        "/#{relative_path}"
+      end
     end
 
     def add(helper_module)

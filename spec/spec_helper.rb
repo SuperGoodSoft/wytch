@@ -6,6 +6,12 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
   config.disable_monkey_patching!
 
+  config.before(:suite) do
+    Wytch.configure do |config|
+      config.content_dir = File.expand_path("./fixtures", __dir__)
+    end
+  end
+
   config.expect_with :rspec do |c|
     # Disable the old `should` syntax.
     c.syntax = :expect
