@@ -9,6 +9,17 @@ loader.setup
 
 module Wytch
   class Error < StandardError; end
+
+  class << self
+    def site
+      @site ||= Site.new
+    end
+
+    def configure
+      yield(site) if block_given?
+      site
+    end
+  end
 end
 
 loader.eager_load
