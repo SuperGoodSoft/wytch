@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-Wytch.configure do |config|
-  config.inflect(
+Wytch.configure do |site|
+  site.inflect(
     "html_helpers" => "HTMLHelpers"
   )
 end

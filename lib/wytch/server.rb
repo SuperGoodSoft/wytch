@@ -11,7 +11,7 @@ module Wytch
     end
 
     def start
-      Configuration.load!
+      Site.load!
 
       require "puma"
       require "puma/server"
@@ -35,7 +35,7 @@ module Wytch
 
         ReloadCoordinator.new(
           site_code_path: src_path,
-          inflections: Wytch.configuration.inflections
+          inflections: Wytch.site.inflections
         )
       end
     end
@@ -43,7 +43,7 @@ module Wytch
     def app
       base_app = lambda { |env|
         path = env["PATH_INFO"]
-        page = reload_coordinator.pages[path]
+        page = Wytch.site.pages[path]
 
         if page
           body = page.render

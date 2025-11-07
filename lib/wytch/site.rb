@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wytch
-  class Configuration
+  class Site
     def self.load!
       if File.exist?(config_file = File.join(Dir.pwd, "config.rb"))
         load config_file
@@ -13,29 +13,25 @@ module Wytch
     def initialize
       @inflections = {}
       @content_dir = "content"
+      @pages = {}
     end
 
     attr_reader :inflections
+    attr_accessor :content_dir, :pages
 
     def inflect(inflections_hash)
       @inflections.merge!(inflections_hash)
     end
-
-    attr_accessor :content_dir
   end
 
   class << self
-    def configuration
-      @configuration ||= Configuration.new
+    def site
+      @site ||= Site.new
     end
 
     def configure
-      yield(configuration) if block_given?
-      configuration
-    end
-
-    def reset_configuration!
-      @configuration = nil
+      yield(site) if block_given?
+      site
     end
   end
 end

@@ -7,7 +7,7 @@ module Wytch
       @metadata = {}
       @view_class = nil
 
-      source_path = File.join(Wytch.configuration.content_dir, @file_path)
+      source_path = File.join(Wytch.site.content_dir, @file_path)
 
       instance_eval File.read(source_path), source_path
     end
@@ -27,7 +27,7 @@ module Wytch
     end
 
     def virtual_path
-      @file_path.delete_prefix("#{Wytch.configuration.content_dir}/").delete_suffix(".rb")
+      @file_path.delete_prefix("#{Wytch.site.content_dir}/").delete_suffix(".rb")
     end
 
     def build_path

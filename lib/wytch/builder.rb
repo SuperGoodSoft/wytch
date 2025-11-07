@@ -7,12 +7,12 @@ module Wytch
     OUTPUT_DIR = "build"
 
     def build
-      Configuration.load!
+      Site.load!
 
       SiteCodeLoader.new(
         path: "src",
         enable_reloading: false,
-        inflections: Wytch.configuration.inflections
+        inflections: Wytch.site.inflections
       )
       pages = ContentLoader.new.load_content
 

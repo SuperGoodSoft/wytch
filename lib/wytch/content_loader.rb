@@ -20,7 +20,7 @@ module Wytch
     end
 
     def content_dir
-      Wytch.configuration.content_dir
+      Wytch.site.content_dir
     end
   end
 end

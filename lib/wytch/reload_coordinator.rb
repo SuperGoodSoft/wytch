@@ -5,12 +5,11 @@ require "listen"
 
 module Wytch
   class ReloadCoordinator
-    attr_reader :reload_lock, :pages
+    attr_reader :reload_lock
 
     def initialize(site_code_path:, inflections: {})
       @site_code_path = site_code_path
       @inflections = inflections
-      @pages = {}
       @reload_lock = Concurrent::ReadWriteLock.new
 
       # Track what's dirty
@@ -66,7 +65,7 @@ module Wytch
       end
 
       @start_content_listener = Once.new do
-        Listen.to(Wytch.configuration.content_dir) do
+        Listen.to(Wytch.site.content_dir) do
           @content_dirty = true
         end.start
       end
@@ -79,7 +78,7 @@ module Wytch
 
     def reload_content
       content_loader = ContentLoader.new
-      @pages = content_loader.load_content
+      Wytch.site.pages = content_loader.load_content
     end
   end
 end
