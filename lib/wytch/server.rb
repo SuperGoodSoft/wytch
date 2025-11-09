@@ -29,20 +29,11 @@ module Wytch
 
     private
 
-    def reload_coordinator
-      @reload_coordinator ||= begin
-        src_path = File.join(Dir.pwd, "src")
-
-        ReloadCoordinator.new(
-          site_code_path: src_path,
-          inflections: Wytch.site.inflections
-        )
-      end
-    end
-
     def app
       base_app = lambda { |env|
         path = env["PATH_INFO"]
+
+        # Otherwise try to serve a page
         page = Wytch.site.pages[path]
 
         if page
@@ -61,8 +52,18 @@ module Wytch
         end
       }
 
-      # Wrap with reloading middleware
-      SiteCodeLoaderMiddleware.new(base_app, reload_coordinator)
+      src_path = File.join(Dir.pwd, "src")
+
+      reload_coordinator = ReloadCoordinator.new(
+        site_code_path: src_path,
+        inflections: Wytch.site.inflections
+      )
+
+      Rack::Builder.new do
+        use Rack::Static, urls: [""], root: "public", cascade: true
+
+        run SiteCodeLoaderMiddleware.new(base_app, reload_coordinator)
+      end
     end
   end
 end

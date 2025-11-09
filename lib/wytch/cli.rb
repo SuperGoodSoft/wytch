@@ -34,6 +34,10 @@ module Wytch
       template("src/site/index_view.rb.tt", "#{name}/src/#{@site_name}/index_view.rb")
       template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")
 
+      # Public directory for static assets
+      empty_directory("#{name}/public")
+      template("public/robots.txt.tt", "#{name}/public/robots.txt")
+
       say "Created new Wytch site in #{name}/", :green
     end
 

@@ -27,6 +27,16 @@ module Wytch
 
         File.write build_path, page.render
       end
+
+      copy_public_files
+    end
+
+    private
+
+    def copy_public_files
+      return unless Dir.exist?("public")
+
+      FileUtils.cp_r "public/.", OUTPUT_DIR, verbose: true
     end
   end
 end
