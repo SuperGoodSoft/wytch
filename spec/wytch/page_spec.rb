@@ -1,4 +1,10 @@
 RSpec.describe Wytch::Page do
+  before do
+    Wytch.configure do |site|
+      site.content_dir = File.expand_path("../fixtures", __dir__)
+    end
+  end
+
   let(:page) { described_class.new(file_path: "dsl.rb") }
 
   describe "#initialize" do

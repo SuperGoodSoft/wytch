@@ -19,6 +19,10 @@ module Wytch
       yield(site) if block_given?
       site
     end
+
+    def reset_site!
+      @site = nil
+    end
   end
 end
 
