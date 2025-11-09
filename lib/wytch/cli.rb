@@ -22,6 +22,7 @@ module Wytch
       empty_directory(name)
       template("Gemfile.tt", "#{name}/Gemfile")
       template("config.rb.tt", "#{name}/config.rb")
+      template("gitignore.tt", "#{name}/.gitignore")
 
       # Content directory
       empty_directory("#{name}/content")
