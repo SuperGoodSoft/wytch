@@ -52,12 +52,7 @@ module Wytch
         end
       }
 
-      src_path = File.join(Dir.pwd, "src")
-
-      reload_coordinator = ReloadCoordinator.new(
-        site_code_path: src_path,
-        inflections: Wytch.site.inflections
-      )
+      reload_coordinator = ReloadCoordinator.new
 
       Rack::Builder.new do
         use Rack::Static, urls: [""], root: "public", cascade: true

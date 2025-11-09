@@ -9,16 +9,12 @@ module Wytch
     def build
       Site.load!
 
-      SiteCodeLoader.new(
-        path: "src",
-        enable_reloading: false,
-        inflections: Wytch.site.inflections
-      )
-      pages = ContentLoader.new.load_content
+      Wytch.site.site_code_loader.eager_load
+      Wytch.site.load_content
 
       FileUtils.mkdir(OUTPUT_DIR) unless Dir.exist?(OUTPUT_DIR)
 
-      pages.values.each do |page|
+      Wytch.site.pages.values.each do |page|
         build_path = File.join(OUTPUT_DIR, page.build_path)
 
         puts "Building #{page.path} → #{build_path}"
