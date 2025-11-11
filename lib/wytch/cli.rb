@@ -24,6 +24,16 @@ module Wytch
       template("config.rb.tt", "#{name}/config.rb")
       template("gitignore.tt", "#{name}/.gitignore")
 
+      # Asset pipeline configuration
+      template("package.json.tt", "#{name}/package.json")
+      template("vite.config.js.tt", "#{name}/vite.config.js")
+      template("rescript.json.tt", "#{name}/rescript.json")
+
+      # Assets directory
+      empty_directory("#{name}/assets")
+      template("frontend/Main.res.tt", "#{name}/assets/Main.res")
+      template("frontend/main.css.tt", "#{name}/assets/main.css")
+
       # Content directory
       empty_directory("#{name}/content")
       template("content/index.rb.tt", "#{name}/content/index.rb")
@@ -39,6 +49,16 @@ module Wytch
       template("public/robots.txt.tt", "#{name}/public/robots.txt")
 
       say "Created new Wytch site in #{name}/", :green
+      say "\nNext steps:", :green
+      say "  cd #{name}"
+      say "  bundle install"
+      say "  npm install"
+      say "\nTo start developing:"
+      say "  npm run dev       # Start Vite dev server (Terminal 1)"
+      say "  wytch server      # Start Wytch dev server (Terminal 2)"
+      say "\nTo build for production:"
+      say "  npm run build     # Build assets with Vite"
+      say "  wytch build       # Build static site"
     end
 
     desc "server", "Start a development server"

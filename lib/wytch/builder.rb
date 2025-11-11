@@ -7,6 +7,7 @@ module Wytch
     OUTPUT_DIR = "build"
 
     def build
+      ENV["RACK_ENV"] = "production"
       Site.load!
 
       Wytch.site.site_code_loader.eager_load
@@ -25,6 +26,7 @@ module Wytch
       end
 
       copy_public_files
+      copy_vite_assets
     end
 
     private
@@ -33,6 +35,14 @@ module Wytch
       return unless Dir.exist?("public")
 
       FileUtils.cp_r "public/.", OUTPUT_DIR, verbose: true
+    end
+
+    def copy_vite_assets
+      vite_output = File.join(OUTPUT_DIR, "assets")
+      return unless Dir.exist?(vite_output)
+
+      # Vite already builds to build/assets, so assets are already in place
+      puts "Vite assets ready at #{vite_output}"
     end
   end
 end

@@ -1,0 +1,2 @@
+// Main entry point for ReScript code
+Console.log("Hello from <%= @site_module %>!")

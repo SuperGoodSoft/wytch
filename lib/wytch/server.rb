@@ -11,6 +11,7 @@ module Wytch
     end
 
     def start
+      ENV["RACK_ENV"] = "development"
       Site.load!
 
       require "puma"
