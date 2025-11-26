@@ -41,6 +41,7 @@ module Wytch
       # Src directory with namespaced code
       empty_directory("#{name}/src")
       empty_directory("#{name}/src/#{@site_name}")
+      template("src/site/page.rb.tt", "#{name}/src/#{@site_name}/page.rb")
       template("src/site/index_view.rb.tt", "#{name}/src/#{@site_name}/index_view.rb")
       template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")
 

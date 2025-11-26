@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Wytch.configure do |site|
+  site.page_class = "<%= @site_module %>::Page"
   site.inflect(
     "html_helpers" => "HTMLHelpers"
   )

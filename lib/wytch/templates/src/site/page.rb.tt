@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+module <%= @site_module %>
+  class Page < Wytch::Page
+  end
+end
