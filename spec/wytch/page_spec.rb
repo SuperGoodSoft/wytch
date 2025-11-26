@@ -13,7 +13,29 @@ RSpec.describe Wytch::Page do
     end
   end
 
-  describe "#render"
+  describe "#render" do
+    let(:view_class) {
+      Class.new do
+        def initialize(_)
+        end
+
+        def call
+          "<html>rendered</html>"
+        end
+      end
+    }
+    let(:page) { described_class.new(file_path: "dsl.rb") }
+
+    before do
+      page.view(view_class)
+    end
+
+    it "delegates to the view" do
+      page.render
+
+      expect(page.render).to eq "<html>rendered</html>"
+    end
+  end
 
   describe "#path" do
     subject { page.path }
