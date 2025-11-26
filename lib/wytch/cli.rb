@@ -37,12 +37,15 @@ module Wytch
       # Content directory
       empty_directory("#{name}/content")
       template("content/index.rb.tt", "#{name}/content/index.rb")
+      empty_directory("#{name}/content/posts")
+      template("content/posts/hello-world.rb.tt", "#{name}/content/posts/hello-world.rb")
 
       # Src directory with namespaced code
       empty_directory("#{name}/src")
       empty_directory("#{name}/src/#{@site_name}")
       template("src/site/page.rb.tt", "#{name}/src/#{@site_name}/page.rb")
-      template("src/site/index_view.rb.tt", "#{name}/src/#{@site_name}/index_view.rb")
+      template("src/site/home_view.rb.tt", "#{name}/src/#{@site_name}/home_view.rb")
+      template("src/site/post_view.rb.tt", "#{name}/src/#{@site_name}/post_view.rb")
       template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")
 
       # Public directory for static assets

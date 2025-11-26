@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module <%= @site_module %>
-  class IndexView < Phlex::HTML
+  class HomeView < Phlex::HTML
     def initialize(page)
       @page = page
     end
@@ -29,8 +29,11 @@ module <%= @site_module %>
         body do
           h1 { @page.metadata[:title] }
 
-          @page.content_blocks.each do |block|
-            render_block(block)
+          h2 { "Posts" }
+          ul do
+            posts.each do |post|
+              li { a(href: post.path) { post.metadata[:title] } }
+            end
           end
         end
       end
@@ -38,20 +41,8 @@ module <%= @site_module %>
 
     private
 
-    def render_block(block)
-      case block[:type]
-      when :paragraph
-        p { block[:text] }
-      when :image
-        img src: block[:src], alt: block[:description]
-      when :code
-        pre do
-          code { block[:content] }
-        end
-      else
-        # Unknown block type - could call helper methods here
-        p { "Unknown block type: #{block[:type]}" }
-      end
+    def posts
+      Wytch.site.pages.values.select { |p| p.path.start_with?("/posts/") }
     end
   end
 end

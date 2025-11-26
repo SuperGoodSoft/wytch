@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+add <%= @site_module %>::HTMLHelpers
+view <%= @site_module %>::PostView
+
+title "Hello World"
+
+p "This is your first blog post."

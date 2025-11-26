@@ -31,8 +31,11 @@ RSpec.describe "wytch new", type: :integration do
     expect(File.exist?(File.join(site_path, "content/index.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "src"))).to be true
     expect(Dir.exist?(File.join(site_path, "src/test_site"))).to be true
-    expect(File.exist?(File.join(site_path, "src/test_site/index_view.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "src/test_site/home_view.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "src/test_site/post_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/html_helpers.rb"))).to be true
+    expect(Dir.exist?(File.join(site_path, "content/posts"))).to be true
+    expect(File.exist?(File.join(site_path, "content/posts/hello-world.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "public"))).to be true
     expect(File.exist?(File.join(site_path, "public/robots.txt"))).to be true
 
@@ -49,8 +52,8 @@ RSpec.describe "wytch new", type: :integration do
       # Verify index.html content
       index_html = File.read("build/index/index.html")
       expect(index_html).to include("Welcome to Wytch")
-      expect(index_html).to include("Beware the wytch!")
-      expect(index_html).to include("Your site is ready.")
+      expect(index_html).to include("Posts")
+      expect(index_html).to include("Hello World")
 
       # Verify robots.txt content
       robots_txt = File.read("build/robots.txt")
