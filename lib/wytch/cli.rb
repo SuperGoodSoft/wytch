@@ -40,6 +40,7 @@ module Wytch
       empty_directory("#{name}/content/posts")
       template("content/posts/hello-world.rb.tt", "#{name}/content/posts/hello-world.rb")
       template("content/sitemap.rb.tt", "#{name}/content/sitemap.rb")
+      template("content/feed.rb.tt", "#{name}/content/feed.rb")
 
       # Src directory with namespaced code
       empty_directory("#{name}/src")
@@ -51,6 +52,8 @@ module Wytch
       template("src/site/post_helpers.rb.tt", "#{name}/src/#{@site_name}/post_helpers.rb")
       template("src/site/sitemap_view.rb.tt", "#{name}/src/#{@site_name}/sitemap_view.rb")
       template("src/site/sitemap_helper.rb.tt", "#{name}/src/#{@site_name}/sitemap_helper.rb")
+      template("src/site/feed_view.rb.tt", "#{name}/src/#{@site_name}/feed_view.rb")
+      template("src/site/feed_helper.rb.tt", "#{name}/src/#{@site_name}/feed_helper.rb")
 
       # Public directory for static assets
       empty_directory("#{name}/public")

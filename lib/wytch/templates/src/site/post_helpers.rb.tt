@@ -2,6 +2,10 @@
 
 module <%= @site_module %>
   module PostHelpers
+    def blog_post?
+      true
+    end
+
     def content_markdown(markdown)
       @content_markdown = markdown
     end

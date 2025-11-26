@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+add <%= @site_module %>::FeedHelper
+view <%= @site_module %>::FeedView
