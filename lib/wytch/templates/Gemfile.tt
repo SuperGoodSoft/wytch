@@ -7,3 +7,5 @@ gem "wytch", path: "<%= @local_wytch_path %>"
 <% else -%>
 gem "wytch", "~> <%= Gem::Version.new(Wytch::VERSION).segments[0..1].join('.') %>"
 <% end -%>
+
+gem "commonmarker", "~> 2.0"

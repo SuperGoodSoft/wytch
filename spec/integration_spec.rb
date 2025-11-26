@@ -33,7 +33,7 @@ RSpec.describe "wytch new", type: :integration do
     expect(Dir.exist?(File.join(site_path, "src/test_site"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/home_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/post_view.rb"))).to be true
-    expect(File.exist?(File.join(site_path, "src/test_site/html_helpers.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "src/test_site/post_helpers.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "content/posts"))).to be true
     expect(File.exist?(File.join(site_path, "content/posts/hello-world.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "public"))).to be true

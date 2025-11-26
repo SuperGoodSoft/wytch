@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-add <%= @site_module %>::HTMLHelpers
+add <%= @site_module %>::PostHelpers
 view <%= @site_module %>::PostView
 
-title "Hello World"
+@metadata[:title] = "Hello World"
 
-p "This is your first blog post."
+content_markdown <<~MD
+  This is your first blog post.
+
+  Write your content in **markdown**.
+MD

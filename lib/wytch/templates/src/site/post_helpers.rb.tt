@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+module <%= @site_module %>
+  module PostHelpers
+    def content_markdown(markdown)
+      @content_markdown = markdown
+    end
+
+    def content_html
+      require "commonmarker"
+      Commonmarker.to_html(@content_markdown || "")
+    end
+  end
+end

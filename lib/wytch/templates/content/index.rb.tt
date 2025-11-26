@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-add <%= @site_module %>::HTMLHelpers
 view <%= @site_module %>::HomeView
 
-title "Welcome to Wytch"
-description "Your static site generator"
+@metadata[:title] = "Welcome to Wytch"
+@metadata[:description] = "Your static site generator"

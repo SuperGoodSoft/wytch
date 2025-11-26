@@ -47,7 +47,7 @@ module Wytch
       template("src/site/layout.rb.tt", "#{name}/src/#{@site_name}/layout.rb")
       template("src/site/home_view.rb.tt", "#{name}/src/#{@site_name}/home_view.rb")
       template("src/site/post_view.rb.tt", "#{name}/src/#{@site_name}/post_view.rb")
-      template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")
+      template("src/site/post_helpers.rb.tt", "#{name}/src/#{@site_name}/post_helpers.rb")
 
       # Public directory for static assets
       empty_directory("#{name}/public")

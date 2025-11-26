@@ -2,7 +2,4 @@
 
 Wytch.configure do |site|
   site.page_class = "<%= @site_module %>::Page"
-  site.inflect(
-    "html_helpers" => "HTMLHelpers"
-  )
 end

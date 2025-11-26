@@ -11,21 +11,10 @@ module <%= @site_module %>
         article do
           h1 { @page.metadata[:title] }
 
-          @page.content_blocks.each do |block|
-            render_block(block)
-          end
+          unsafe_raw @page.content_html
         end
 
         a(href: "/") { "Back to home" }
-      end
-    end
-
-    private
-
-    def render_block(block)
-      case block[:type]
-      when :paragraph
-        p { block[:text] }
       end
     end
   end
