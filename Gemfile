@@ -13,4 +13,5 @@ gem "rspec", "~> 3.0"
 gem "standard", "~> 1.3"
 
 # For integration tests (generated sites depend on this)
+gem "builder", "~> 3.3"
 gem "commonmarker", "~> 2.0"

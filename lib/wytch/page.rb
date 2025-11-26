@@ -41,5 +41,21 @@ module Wytch
     def view(view_class)
       @view_class = view_class
     end
+
+    def include_in_sitemap?
+      true
+    end
+
+    def last_modified
+      nil
+    end
+
+    def change_frequency
+      nil
+    end
+
+    def priority
+      nil
+    end
   end
 end

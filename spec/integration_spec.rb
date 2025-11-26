@@ -34,8 +34,11 @@ RSpec.describe "wytch new", type: :integration do
     expect(File.exist?(File.join(site_path, "src/test_site/home_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/post_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/post_helpers.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "src/test_site/sitemap_view.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "src/test_site/sitemap_helper.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "content/posts"))).to be true
     expect(File.exist?(File.join(site_path, "content/posts/hello-world.rb"))).to be true
+    expect(File.exist?(File.join(site_path, "content/sitemap.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "public"))).to be true
     expect(File.exist?(File.join(site_path, "public/robots.txt"))).to be true
 
@@ -59,6 +62,15 @@ RSpec.describe "wytch new", type: :integration do
       robots_txt = File.read("build/robots.txt")
       expect(robots_txt).to include("User-agent: *")
       expect(robots_txt).to include("Allow: /")
+
+      # Verify sitemap.xml
+      expect(File.exist?("build/sitemap.xml")).to be true
+      sitemap_xml = File.read("build/sitemap.xml")
+      expect(sitemap_xml).to include('<?xml version="1.0" encoding="UTF-8"?>')
+      expect(sitemap_xml).to include("http://www.sitemaps.org/schemas/sitemap/0.9")
+      expect(sitemap_xml).to include("<loc>/</loc>")
+      expect(sitemap_xml).to include("/posts/hello-world")
+      expect(sitemap_xml).not_to include("/sitemap.xml")
     end
   end
 end

@@ -2,4 +2,5 @@
 
 Wytch.configure do |site|
   site.page_class = "<%= @site_module %>::Page"
+  # site.base_url = "https://example.com"
 end

@@ -16,10 +16,11 @@ module Wytch
       @site_code_path = "src"
       @page_class = "Wytch::Page"
       @pages = {}
+      @base_url = nil
     end
 
     attr_reader :inflections
-    attr_accessor :content_dir, :site_code_path, :page_class, :pages
+    attr_accessor :content_dir, :site_code_path, :page_class, :pages, :base_url
 
     def inflect(inflections_hash)
       @inflections.merge!(inflections_hash)
