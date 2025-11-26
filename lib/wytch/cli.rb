@@ -44,6 +44,7 @@ module Wytch
       empty_directory("#{name}/src")
       empty_directory("#{name}/src/#{@site_name}")
       template("src/site/page.rb.tt", "#{name}/src/#{@site_name}/page.rb")
+      template("src/site/layout.rb.tt", "#{name}/src/#{@site_name}/layout.rb")
       template("src/site/home_view.rb.tt", "#{name}/src/#{@site_name}/home_view.rb")
       template("src/site/post_view.rb.tt", "#{name}/src/#{@site_name}/post_view.rb")
       template("src/site/html_helpers.rb.tt", "#{name}/src/#{@site_name}/html_helpers.rb")

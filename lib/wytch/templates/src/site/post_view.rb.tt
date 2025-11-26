@@ -7,36 +7,16 @@ module <%= @site_module %>
     end
 
     def view_template
-      doctype
+      render Layout.new(@page) do
+        article do
+          h1 { @page.metadata[:title] }
 
-      html do
-        head do
-          title { @page.metadata[:title] }
-          meta name: "description", content: @page.metadata[:description] if @page.metadata[:description]
-          meta name: "viewport", content: "width=device-width, initial-scale=1.0"
-
-          # Vite assets
-          if ENV["RACK_ENV"] == "development"
-            script src: "http://localhost:6970/@vite/client", type: "module"
-            link rel: "stylesheet", href: "http://localhost:6970/assets/main.css"
-            script src: "http://localhost:6970/assets/Main.res", type: "module"
-          else
-            link rel: "stylesheet", href: "/assets/main.css"
-            script src: "/assets/app.js", type: "module"
+          @page.content_blocks.each do |block|
+            render_block(block)
           end
         end
 
-        body do
-          article do
-            h1 { @page.metadata[:title] }
-
-            @page.content_blocks.each do |block|
-              render_block(block)
-            end
-          end
-
-          a(href: "/") { "Back to home" }
-        end
+        a(href: "/") { "Back to home" }
       end
     end
 
