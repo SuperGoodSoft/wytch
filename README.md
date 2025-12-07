@@ -11,7 +11,30 @@ gem install wytch
 
 ## Usage
 
-FIXME
+Generate a new site like this:
+
+```bash
+wytch new my-site
+cd my-site
+bundle install
+npm install
+```
+
+Run the development servers with:
+
+```bash
+npm run dev # Runs the vite dev server for assets
+wytch server # Runes the Wytch dev server
+```
+
+Then visit `http://localhost:6969` to see your site.
+
+Once you are ready to build for production:
+
+```bash
+npm run build # Build assets with Vite
+wytch build # Your static site will be in the dist directory.
+```
 
 ## Development
 
