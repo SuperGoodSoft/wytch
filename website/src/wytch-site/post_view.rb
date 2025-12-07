@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module Wytch-site
+  class PostView < Phlex::HTML
+    def initialize(page)
+      @page = page
+    end
+
+    def view_template
+      render Layout.new(@page) do
+        article do
+          h1 { @page.metadata[:title] }
+
+          unsafe_raw @page.content_html
+        end
+
+        a(href: "/") { "Back to home" }
+      end
+    end
+  end
+end

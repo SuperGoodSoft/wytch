@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "wytch", "~> 0.2"
+
+gem "builder", "~> 3.3"
+gem "commonmarker", "~> 2.0"
