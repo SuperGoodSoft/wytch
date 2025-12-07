@@ -3,15 +3,36 @@
 require "thor"
 
 module Wytch
+  # Command-line interface for Wytch.
+  #
+  # Provides commands for creating, developing, and building Wytch sites.
+  #
+  # @example
+  #   $ wytch new my-site     # Create a new site
+  #   $ wytch server          # Start development server
+  #   $ wytch build           # Build for production
   class CLI < Thor
     include Thor::Actions
 
+    # Returns the path to template files used by the generator.
+    #
+    # @return [String] path to templates directory
     def self.source_root
       File.expand_path("templates", __dir__)
     end
 
     desc "new NAME", "Create a new Wytch site"
     method_option :local, type: :boolean, default: false, desc: "Use local Wytch gem for development"
+    # Creates a new Wytch site with the given name.
+    #
+    # Generates a complete site structure including:
+    # - Configuration files (Gemfile, config.rb, package.json, etc.)
+    # - Content directory with sample pages
+    # - Source directory with views and layouts
+    # - Asset pipeline setup (Vite, ReScript, Tailwind)
+    #
+    # @param name [String] the name/directory for the new site
+    # @return [void]
     def new(name)
       @local_wytch_path = File.expand_path("../..", __dir__) if options[:local]
 
@@ -75,11 +96,20 @@ module Wytch
     desc "server", "Start a development server"
     method_option :port, type: :numeric, default: 6969, aliases: "-p", desc: "Port to run the server on"
     method_option :host, type: :string, default: "localhost", aliases: "-h", desc: "Host to bind the server to"
+    # Starts the development server with hot reloading.
+    #
+    # @return [void]
     def server
       Server.new(options).start
     end
 
     desc "build", "Build the static site"
+    # Builds the site for production.
+    #
+    # First runs `npm run build` to compile assets with Vite,
+    # then renders all pages to static HTML in the build/ directory.
+    #
+    # @return [void]
     def build
       system("npm run build") || abort("Asset build failed")
       Builder.new.build
@@ -87,6 +117,10 @@ module Wytch
 
     private
 
+    # Converts a snake_case name to PascalCase.
+    #
+    # @param name [String] the name to classify
+    # @return [String] the PascalCase version
     def classify(name)
       name.split("_").map(&:capitalize).join
     end

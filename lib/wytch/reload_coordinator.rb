@@ -4,9 +4,21 @@ require "concurrent/atomic/read_write_lock"
 require "listen"
 
 module Wytch
+  # Coordinates hot reloading of site code and content during development.
+  #
+  # The ReloadCoordinator watches the site code and content directories for
+  # changes using the Listen gem. When files change, it marks the appropriate
+  # component as dirty and reloads it on the next request.
+  #
+  # It uses a read-write lock to ensure thread-safe reloading while allowing
+  # concurrent reads during page rendering.
+  #
+  # @see Wytch::SiteCodeLoaderMiddleware
   class ReloadCoordinator
+    # @return [Concurrent::ReadWriteLock] lock for coordinating reloads
     attr_reader :reload_lock
 
+    # Creates a new ReloadCoordinator and sets up file watchers.
     def initialize
       @reload_lock = Concurrent::ReadWriteLock.new
 
@@ -26,6 +38,13 @@ module Wytch
       end
     end
 
+    # Reloads site code and/or content if changes have been detected.
+    #
+    # Starts file listeners on first call. If site code has changed, reloads
+    # both site code (via Zeitwerk) and content. If only content has changed,
+    # reloads just the content.
+    #
+    # @return [void]
     def reload!
       @start_site_code_listener&.call
       @start_content_listener&.call
