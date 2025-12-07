@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Wytch-site
+module WytchSite
   class SitemapView
     def initialize(page)
       @page = page

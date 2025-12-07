@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-view Wytch-site::HomeView
+view WytchSite::HomeView
 
-@metadata[:title] = "Welcome to Wytch"
-@metadata[:description] = "Your static site generator"
+@metadata[:title] = "Wytch"
+@metadata[:description] = "A minimal static site generator"

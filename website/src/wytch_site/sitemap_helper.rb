@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Wytch-site
-  module FeedHelper
+module WytchSite
+  module SitemapHelper
     def path
-      "/feed.xml"
+      "/sitemap.xml"
     end
 
     def build_path
-      "feed.xml"
+      "sitemap.xml"
     end
 
     def include_in_sitemap?
