@@ -81,6 +81,7 @@ module Wytch
 
     desc "build", "Build the static site"
     def build
+      system("npm run build") || abort("Asset build failed")
       Builder.new.build
     end
 

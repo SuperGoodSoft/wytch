@@ -32,8 +32,7 @@ Then visit `http://localhost:6969` to see your site.
 Once you are ready to build for production:
 
 ```bash
-npm run build # Build assets with Vite
-wytch build # Your static site will be in the dist directory.
+wytch build # Builds assets and generates your static site in the build directory.
 ```
 
 ## Development
