@@ -89,8 +89,7 @@ module Wytch
       say "  npm run dev       # Start Vite dev server (Terminal 1)"
       say "  wytch server      # Start Wytch dev server (Terminal 2)"
       say "\nTo build for production:"
-      say "  npm run build     # Build assets with Vite"
-      say "  wytch build       # Build static site"
+      say "  wytch build       # Build assets and static site to build/"
     end
 
     desc "server", "Start a development server"
