@@ -11,6 +11,7 @@ module <%= @site_module %>
 
       html do
         head do
+          meta charset: "utf-8"
           title { @page.metadata[:title] }
           meta name: "description", content: @page.metadata[:description] if @page.metadata[:description]
           meta name: "viewport", content: "width=device-width, initial-scale=1.0"
