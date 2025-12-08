@@ -2,5 +2,5 @@
 
 module Wytch
   # The current version of Wytch.
-  VERSION = "0.3.0"
+  VERSION = "0.4.0"
 end
