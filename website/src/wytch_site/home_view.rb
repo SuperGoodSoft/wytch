@@ -12,15 +12,15 @@ module WytchSite
         p { @page.metadata[:description] }
 
         section do
-          h2 { 'Links' }
+          h2 { "Links" }
           ul do
-            li { a(href: 'https://github.com/SuperGoodSoft/wytch') { 'GitHub' } }
-            li { a(href: 'https://rubygems.org/gems/wytch') { 'RubyGems' } }
+            li { a(href: "https://github.com/SuperGoodSoft/wytch") { "GitHub" } }
+            li { a(href: "https://rubygems.org/gems/wytch") { "RubyGems" } }
           end
         end
 
         section do
-          h2 { 'API Documentation' }
+          h2 { "API Documentation" }
           ul do
             api_pages.each do |page|
               li { a(href: page.path) { page.metadata[:title] } }
@@ -34,8 +34,8 @@ module WytchSite
 
     def api_pages
       Wytch.site.pages.values
-           .select { |p| p.path.start_with?('/api/') }
-           .sort_by { |p| p.metadata[:title] }
+        .select { |p| p.path.start_with?("/api/") }
+        .sort_by { |p| p.metadata[:title] }
     end
   end
 end

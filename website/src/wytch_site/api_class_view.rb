@@ -41,7 +41,7 @@ module WytchSite
     def render_method(method)
       article(class: "method", id: method.name) do
         h3 { code { method.signature } }
-        
+
         unless method.docstring.to_s.empty?
           div(class: "method-description") do
             unsafe_raw markdown_to_html(method.docstring.to_s)
@@ -56,7 +56,7 @@ module WytchSite
             param_tags.each do |tag|
               dd do
                 code { tag.name }
-                span { " (#{tag.types.join(', ')})" } if tag.types
+                span { " (#{tag.types.join(", ")})" } if tag.types
                 plain " — #{tag.text}" if tag.text
               end
             end
@@ -70,7 +70,7 @@ module WytchSite
             dt { "Returns:" }
             return_tags.each do |tag|
               dd do
-                span { "(#{tag.types.join(', ')})" } if tag.types
+                span { "(#{tag.types.join(", ")})" } if tag.types
                 plain " — #{tag.text}" if tag.text
               end
             end
@@ -82,9 +82,9 @@ module WytchSite
     def markdown_to_html(text)
       # Simple markdown rendering - just handle basic formatting
       text.gsub(/`([^`]+)`/, '<code>\1</code>')
-          .gsub(/\*\*([^*]+)\*\*/, '<strong>\1</strong>')
-          .gsub(/\n\n/, '</p><p>')
-          .then { |s| "<p>#{s}</p>" }
+        .gsub(/\*\*([^*]+)\*\*/, '<strong>\1</strong>')
+        .gsub("\n\n", "</p><p>")
+        .then { |s| "<p>#{s}</p>" }
     end
   end
 end

@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'bundler/setup'
-require 'yard'
-require 'fileutils'
+require "bundler/setup"
+require "yard"
+require "fileutils"
 
 # Path to the wytch gem lib directory
-WYTCH_LIB_PATH = File.expand_path('../../lib', __dir__)
-API_CONTENT_DIR = File.expand_path('../content/api', __dir__)
+WYTCH_LIB_PATH = File.expand_path("../../lib", __dir__)
+API_CONTENT_DIR = File.expand_path("../content/api", __dir__)
 
 puts "Cleaning existing API documentation..."
 FileUtils.rm_rf(API_CONTENT_DIR)
@@ -19,15 +19,15 @@ YARD.parse("#{WYTCH_LIB_PATH}/**/*.rb")
 puts "Generating API content files..."
 YARD::Registry.all(:class).each do |klass|
   # Convert Wytch::Page to wytch/page
-  path_segments = klass.path.split('::').map(&:downcase)
-  
+  path_segments = klass.path.split("::").map(&:downcase)
+
   # Create directory structure
   dir_path = File.join(API_CONTENT_DIR, *path_segments[0..-2])
   FileUtils.mkdir_p(dir_path) if path_segments.length > 1
-  
+
   # Create content file
-  file_path = File.join(API_CONTENT_DIR, *path_segments) + '.rb'
-  
+  file_path = File.join(API_CONTENT_DIR, *path_segments) + ".rb"
+
   File.write(file_path, <<~RUBY)
     # frozen_string_literal: true
     
@@ -36,8 +36,8 @@ YARD::Registry.all(:class).each do |klass|
     @metadata[:title] = "#{klass.path}"
     @metadata[:yard_path] = "#{klass.path}"
   RUBY
-  
-  puts "  Created #{file_path.sub(API_CONTENT_DIR + '/', '')}"
+
+  puts "  Created #{file_path.sub(API_CONTENT_DIR + "/", "")}"
 end
 
 puts "\nGenerated #{YARD::Registry.all(:class).count} API documentation pages"
