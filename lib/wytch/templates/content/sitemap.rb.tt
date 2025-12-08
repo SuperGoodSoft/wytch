@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-add <%= @site_module %>::SitemapHelper
-view <%= @site_module %>::SitemapView
+add Wytch::SitemapHelper
+view Wytch::SitemapView

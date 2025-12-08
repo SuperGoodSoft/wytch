@@ -34,8 +34,6 @@ RSpec.describe "wytch new", type: :integration do
     expect(File.exist?(File.join(site_path, "src/test_site/home_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/post_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/post_helpers.rb"))).to be true
-    expect(File.exist?(File.join(site_path, "src/test_site/sitemap_view.rb"))).to be true
-    expect(File.exist?(File.join(site_path, "src/test_site/sitemap_helper.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/feed_view.rb"))).to be true
     expect(File.exist?(File.join(site_path, "src/test_site/feed_helper.rb"))).to be true
     expect(Dir.exist?(File.join(site_path, "content/posts"))).to be true

@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Move sitemap generation to Wytch core (`Wytch::SitemapView` and `Wytch::SitemapHelper`)
+
 ## [0.3.0] - 2025-12-7
 
 - Add YARD documentation to all classes and methods

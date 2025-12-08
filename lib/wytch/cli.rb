@@ -71,8 +71,6 @@ module Wytch
       template("src/site/home_view.rb.tt", "#{name}/src/#{@site_name}/home_view.rb")
       template("src/site/post_view.rb.tt", "#{name}/src/#{@site_name}/post_view.rb")
       template("src/site/post_helpers.rb.tt", "#{name}/src/#{@site_name}/post_helpers.rb")
-      template("src/site/sitemap_view.rb.tt", "#{name}/src/#{@site_name}/sitemap_view.rb")
-      template("src/site/sitemap_helper.rb.tt", "#{name}/src/#{@site_name}/sitemap_helper.rb")
       template("src/site/feed_view.rb.tt", "#{name}/src/#{@site_name}/feed_view.rb")
       template("src/site/feed_helper.rb.tt", "#{name}/src/#{@site_name}/feed_helper.rb")
 
