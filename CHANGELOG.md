@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [0.3.0] - 2025-12-7
+
+- Add YARD documentation to all classes and methods
+- Add UTF-8 charset meta tag to generated site layouts
+- Fix index page building to `build/index.html` instead of `build/index/index.html`
+- Update CLI output to reflect single-command build process
+
 ## [0.2.0] - 2025-12-7
 
 - Add Vite integration for asset pipeline (CSS, ReScript)
