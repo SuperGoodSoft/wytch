@@ -52,11 +52,11 @@ RSpec.describe "wytch new", type: :integration do
 
       # Verify build output
       expect(Dir.exist?("build")).to be true
-      expect(File.exist?("build/index/index.html")).to be true
+      expect(File.exist?("build/index.html")).to be true
       expect(File.exist?("build/robots.txt")).to be true
 
       # Verify index.html content
-      index_html = File.read("build/index/index.html")
+      index_html = File.read("build/index.html")
       expect(index_html).to include("Welcome to Wytch")
       expect(index_html).to include("Posts")
       expect(index_html).to include("Hello World")

@@ -65,7 +65,7 @@ RSpec.describe Wytch::Page do
         described_class.new(file_path: "index.rb")
       }
 
-      it { is_expected.to eq "index/index.html" }
+      it { is_expected.to eq "index.html" }
     end
 
     context "when the page is not an index" do

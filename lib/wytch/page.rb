@@ -70,7 +70,11 @@ module Wytch
     #
     # @return [String] the build path (e.g., "about/index.html")
     def build_path
-      "#{virtual_path}/index.html"
+      if virtual_path == "index"
+        "index.html"
+      else
+        "#{virtual_path}/index.html"
+      end
     end
 
     # Extends this page instance with a helper module.
