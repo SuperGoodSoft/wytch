@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "date"
+require "fileutils"
+
+# Parse version argument
+if ARGV.empty?
+  puts "Usage: bin/release VERSION"
+  puts "Example: bin/release 1.2.3"
+  exit 1
+end
+
+version = ARGV[0]
+unless version.match?(/^\d+\.\d+\.\d+$/)
+  puts "Error: Version must be in format X.Y.Z (e.g., 1.2.3)"
+  exit 1
+end
+
+puts "Releasing version #{version}..."
+
+# 1. Update lib/wytch/version.rb
+version_file = "lib/wytch/version.rb"
+version_content = File.read(version_file)
+updated_version_content = version_content.gsub(
+  /VERSION = "[^"]+"/, 
+  %(VERSION = "#{version}")
+)
+File.write(version_file, updated_version_content)
+puts "✓ Updated #{version_file}"
+
+# 2. Update CHANGELOG.md
+changelog_file = "CHANGELOG.md"
+changelog_content = File.read(changelog_file)
+current_date = Date.today.strftime("%Y-%-m-%-d")
+updated_changelog = changelog_content.sub(
+  "## [Unreleased]",
+  "## [Unreleased]\n\n## [#{version}] - #{current_date}"
+)
+File.write(changelog_file, updated_changelog)
+puts "✓ Updated #{changelog_file}"
+
+# 3. Commit changes
+commit_message = "v#{version}"
+system("jj", "commit", "-m", commit_message) || exit(1)
+puts "✓ Committed changes with message '#{commit_message}'"
+
+# 4. Move main branch to the change we just made
+system("jj", "bookmark", "set", "main", "-r", "@-") || exit(1)
+puts "✓ Moved main branch to release commit"
+
+# 5. Tag the version
+tag_name = "v#{version}"
+tag_message = "Version #{version}"
+system("git", "tag", "-m", tag_message, tag_name) || exit(1)
+puts "✓ Created tag #{tag_name}"
+
+# 6. Push changes and tags
+system("jj", "git", "push", "-b", "main") || exit(1)
+puts "✓ Pushed main branch"
+
+system("git", "push", "--tags") || exit(1)
+puts "✓ Pushed tags"
+
+# 7. Run bundle exec rake release
+system("bundle", "exec", "rake", "release") || exit(1)
+puts "✓ Released gem"
+
+puts "\n🎉 Successfully released version #{version}!"
