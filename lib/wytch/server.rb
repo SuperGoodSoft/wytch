@@ -55,9 +55,6 @@ module Wytch
 
     private
 
-    # Builds the Rack application stack.
-    #
-    # @return [Rack::Builder] the configured Rack app
     def app
       base_app = lambda { |env|
         path = env["PATH_INFO"]

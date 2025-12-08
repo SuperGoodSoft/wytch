@@ -29,24 +29,14 @@ module Wytch
 
     private
 
-    # Creates a Page instance from a content file.
-    #
-    # @param file_path [String] path to the content file, relative to content_dir
-    # @return [Page] the loaded page
     def load_page(file_path)
       page_class.new(file_path:)
     end
 
-    # Returns the configured page class.
-    #
-    # @return [Class] the page class to instantiate
     def page_class
       Object.const_get(Wytch.site.page_class)
     end
 
-    # Returns the content directory path.
-    #
-    # @return [String] the content directory
     def content_dir
       Wytch.site.content_dir
     end

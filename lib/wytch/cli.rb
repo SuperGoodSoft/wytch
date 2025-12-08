@@ -114,10 +114,6 @@ module Wytch
 
     private
 
-    # Converts a snake_case name to PascalCase.
-    #
-    # @param name [String] the name to classify
-    # @return [String] the PascalCase version
     def classify(name)
       name.split("_").map(&:capitalize).join
     end
