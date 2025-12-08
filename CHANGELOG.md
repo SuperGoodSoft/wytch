@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.5.0] - 2025-12-7
+
 - Documentation cleanup
 
 ## [0.4.0] - 2025-12-7
