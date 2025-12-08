@@ -4,4 +4,5 @@ source "https://rubygems.org"
 
 gem "wytch", path: ".."
 
+gem "builder", "~> 3.3"
 gem "yard", "~> 0.9"
