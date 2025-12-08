@@ -40,29 +40,41 @@ updated_changelog = changelog_content.sub(
 File.write(changelog_file, updated_changelog)
 puts "✓ Updated #{changelog_file}"
 
-# 3. Commit changes
+# 3. Update website
+puts "\nUpdating website..."
+Dir.chdir("website") do
+  # Regenerate API docs
+  system("bin/generate_api_docs") || exit(1)
+  puts "✓ Generated API documentation"
+  
+  # Build website
+  system("bundle", "exec", "wytch", "build") || exit(1)
+  puts "✓ Built website"
+end
+
+# 4. Commit changes
 commit_message = "v#{version}"
 system("jj", "commit", "-m", commit_message) || exit(1)
 puts "✓ Committed changes with message '#{commit_message}'"
 
-# 4. Move main branch to the change we just made
+# 5. Move main branch to the change we just made
 system("jj", "bookmark", "set", "main", "-r", "@-") || exit(1)
 puts "✓ Moved main branch to release commit"
 
-# 5. Tag the version
+# 6. Tag the version
 tag_name = "v#{version}"
 tag_message = "Version #{version}"
 system("git", "tag", "-m", tag_message, tag_name) || exit(1)
 puts "✓ Created tag #{tag_name}"
 
-# 6. Push changes and tags
+# 7. Push changes and tags
 system("jj", "git", "push", "-b", "main") || exit(1)
 puts "✓ Pushed main branch"
 
 system("git", "push", "--tags") || exit(1)
 puts "✓ Pushed tags"
 
-# 7. Run bundle exec rake release
+# 8. Run bundle exec rake release
 system("bundle", "exec", "rake", "release") || exit(1)
 puts "✓ Released gem"
 
