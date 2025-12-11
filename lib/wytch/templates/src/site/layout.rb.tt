@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module <%= @site_module %>
   class Layout < Phlex::HTML
+    MANIFEST_PATH = "build/assets/.vite/manifest.json"
+
     def initialize(page)
       @page = page
     end
@@ -22,13 +26,28 @@ module <%= @site_module %>
             link rel: "stylesheet", href: "http://localhost:6970/assets/main.css"
             script src: "http://localhost:6970/assets/Main.res", type: "module"
           else
-            link rel: "stylesheet", href: "/assets/main.css"
-            script src: "/assets/app.js", type: "module"
+            link rel: "stylesheet", href: asset_path("assets/main.css")
+            script src: asset_path("assets/Main.res", "assets/app.js"), type: "module"
           end
         end
 
         body(&block)
       end
+    end
+
+    private
+
+    def asset_path(file_path, default_path = nil)
+      "/#{asset_manifest[file_path]&.fetch("file", default_path || file_path)}"
+    end
+
+    def asset_manifest
+      @asset_manifest ||=
+        if File.exist?(MANIFEST_PATH)
+          JSON.parse(File.read(MANIFEST_PATH))
+        else
+          {}
+        end
     end
   end
 end
