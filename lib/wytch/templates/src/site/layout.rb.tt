@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'json'
+require "json"
 
 module <%= @site_module %>
   class Layout < Phlex::HTML
