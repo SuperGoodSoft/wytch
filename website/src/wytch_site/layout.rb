@@ -4,7 +4,7 @@ require "json"
 
 module WytchSite
   class Layout < Phlex::HTML
-    MANIFEST_PATH = "build/assets/.vite/manifest.json"
+    MANIFEST_PATH = "build/.vite/manifest.json"
 
     def initialize(page)
       @page = page
