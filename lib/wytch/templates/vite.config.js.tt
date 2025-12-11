@@ -10,7 +10,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: "build/assets",
+    outDir: "build",
     manifest: true,
     rollupOptions: {
       input: {
